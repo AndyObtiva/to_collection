@@ -1,38 +1,36 @@
-# to_collection
+# `to_collection` v1.0.0
 
 Treat an array of objects and a singular object uniformly as a collection of objects.
 Especially useful in processing REST Web Service API JSON responses in a functional approach.
 
 ## Introduction
 
-Canonicalize data to treat uniformly whether it comes in as a single object or an array of objects, dropping `nils` out automatically:
+Canonicalize data to treat uniformly whether it comes in as a single object or an array of objects, dropping `nils` out automatically.
+
+API: `object.to_collection(compact)` where `compact` is a boolean for whether to compact collection or not. It is true by default.
+
+Example:
 
 ```ruby
 city_counts = {}
-canonical_json_response = people_http_request.to_collection
-canonical_json_response.each do |person|
+people_http_request.to_collection.each do |person|
   city_counts[person["city"]] ||= 0
   city_counts[person["city"]] += 1
 end
 ```
 
-Shorter syntax:
+Wanna keep `nil` values? No problem! Just pass `false` as an argument:
 
 ```ruby
+bad_people_count = 0
 city_counts = {}
-people_http_request.each_in_collection do |person|
-  city_counts[person["city"]] ||= 0
-  city_counts[person["city"]] += 1
-end
-```
-
-Wanna keep `nil`s? No problem! Just pass `false` as an argument:
-
-```ruby
-people_http_request.to_collection(false)
-
-people_http_request.each_in_collection(false) do |person|
-  # do work
+people_http_request.to_collection(false).each do |person|
+  if person.nil?
+    bad_people_count += 1
+  else
+    city_counts[person["city"]] ||= 0
+    city_counts[person["city"]] += 1
+  end
 end
 ```
 
@@ -184,8 +182,8 @@ How about go one step further and bake this into all objects using our previous 
 
 ```ruby
 Object.class_eval do
-  def each_in_collection(&processor)
-    [self].flatten(1).compact.each(&:process_json_response)
+  def to_collection
+    [self].flatten(1).compact
   end
 end
 ```
@@ -193,13 +191,14 @@ end
 Example usage (notice how more readable this is than the explicit version above by hiding flatten and compact):
 
 ```ruby
-people_http_request.each_in_collection do |person|
+city_counts = {}
+people_http_request.to_collection.each do |person|
   city_counts[person["city"]] ||= 0
   city_counts[person["city"]] += 1
 end
 ```
 
-A refactored version including further utility methods would be:
+A refactored version including optional compacting would be:
 
 ```ruby
 Object.class_eval do
@@ -207,24 +206,27 @@ Object.class_eval do
     collection = [self].flatten(1)
     compact ? collection.compact : collection
   end
-  def each_in_collection(compact=true, &processor)
-    to_collection(compact).each(&:process_json_response)
+end
+```
+
+Example usage of `to_collection(compact)` to count bad person hashes coming as nil:
+
+```ruby
+bad_people_count = 0
+city_counts = {}
+people_http_request.to_collection(false).each do |person|
+  if person.nil?
+    bad_people_count += 1
+  else
+    city_counts[person["city"]] ||= 0
+    city_counts[person["city"]] += 1
   end
 end
 ```
 
-Example usage of to_collection:
+You asked for "Elegant" didn't you? I hope this was what you were looking for.
 
-```ruby
-canonical_json_response = people_http_request.to_collection
-```
-
-Go ahead and grab as Ruby gem over here:
-to_collection
-
-You asked for "Elegant" didn't you? Well, I hope that was what you were looking for.
-
-## Contributing to to_collection
+## Contributing
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
