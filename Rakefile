@@ -17,28 +17,57 @@ Jeweler::Tasks.new do |gem|
   gem.name = "to_collection"
   gem.homepage = "http://github.com/AndyObtiva/to_collection"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Treat an array of objects and a singular object uniformly as a collection of objects}
+  gem.description = %Q{Treat an array of objects and a singular object uniformly as a collection of objects. Especially useful in processing REST Web Service API JSON responses in a functional approach.
+
+  Canonicalize data to treat uniformly whether it comes in as a single object or an array of objects, dropping `nils` out automatically:
+
+  ```ruby
+  canonical_json_response = people_http_request.to_collection
+  canonical_json_response.each do |person|
+    city_counts[person["city"]] ||= 0
+    city_counts[person["city"]] += 1
+  end
+  ```
+
+  Shorter syntax:
+
+  ```ruby
+  people_http_request.each_in_collection do |person|
+    city_counts[person["city"]] ||= 0
+    city_counts[person["city"]] += 1
+  end
+  ```
+
+  Wanna keep nils? No problem:
+
+  ```ruby
+  canonical_json_response = people_http_request.to_collection(false)
+
+  people_http_request.each_in_collection(false) do |person|
+    city_counts[person["city"]] ||= 0
+    city_counts[person["city"]] += 1
+  end
+  ```
+
+}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["AndyObtiva"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-end
-
 desc "Code coverage detail"
 task :simplecov do
   ENV['COVERAGE'] = "true"
-  Rake::Task['test'].execute
+  Rake::Task['spec'].execute
 end
 
-task :default => :test
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec)
+
+task :default => :spec
 
 require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
