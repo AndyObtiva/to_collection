@@ -1,7 +1,7 @@
 # `to_collection` v1.0.0
 [![Gem Version](https://badge.fury.io/rb/to_collection.svg)](http://badge.fury.io/rb/to_collection)
 [![Build Status](https://api.travis-ci.org/AndyObtiva/to_collection.svg?branch=master)](https://travis-ci.org/AndyObtiva/to_collection)
-[![Coverage Status](https://coveralls.io/repos/AndyObtiva/to_collection/badge.svg?branch=master)](https://coveralls.io/r/AndyObtiva/to_collection?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/AndyObtiva/to_collection/badge.svg?branch=master)](https://coveralls.io/github/AndyObtiva/to_collection?branch=master)
 [![Code Climate](https://codeclimate.com/github/AndyObtiva/to_collection.svg)](https://codeclimate.com/github/AndyObtiva/to_collection)
 
 Treat an array of objects and a singular object uniformly as a collection of objects.
