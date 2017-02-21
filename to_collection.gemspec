@@ -34,11 +34,11 @@ Gem::Specification.new do |s|
     "lib/.keep",
     "lib/ext/object.rb",
     "lib/to_collection.rb",
-    "ruby187.Gemfile",
     "spec/.keep",
     "spec/lib/.keep",
     "spec/lib/to_collection_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "to_collection.gemspec"
   ]
   s.homepage = "http://github.com/AndyObtiva/to_collection"
   s.licenses = ["MIT"]
@@ -55,9 +55,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<coveralls>, ["= 0.8.5"])
       s.add_development_dependency(%q<simplecov>, ["~> 0.10.0"])
       s.add_development_dependency(%q<codeclimate-test-reporter>, ["~> 1.0.5"])
-      s.add_development_dependency(%q<rake>, ["~> 10.4.2"])
       s.add_development_dependency(%q<rack>, ["~> 1.6.5"])
       s.add_development_dependency(%q<nokogiri>, ["~> 1.6.8.1"])
+      s.add_development_dependency(%q<tins>, ["~> 1.5.0"])
       s.add_development_dependency(%q<term-ansicolor>, ["~> 1.3.2"])
     else
       s.add_dependency(%q<jeweler>, ["~> 2.0.1"])
@@ -66,9 +66,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<coveralls>, ["= 0.8.5"])
       s.add_dependency(%q<simplecov>, ["~> 0.10.0"])
       s.add_dependency(%q<codeclimate-test-reporter>, ["~> 1.0.5"])
-      s.add_dependency(%q<rake>, ["~> 10.4.2"])
       s.add_dependency(%q<rack>, ["~> 1.6.5"])
       s.add_dependency(%q<nokogiri>, ["~> 1.6.8.1"])
+      s.add_dependency(%q<tins>, ["~> 1.5.0"])
       s.add_dependency(%q<term-ansicolor>, ["~> 1.3.2"])
     end
   else
@@ -78,9 +78,9 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<coveralls>, ["= 0.8.5"])
     s.add_dependency(%q<simplecov>, ["~> 0.10.0"])
     s.add_dependency(%q<codeclimate-test-reporter>, ["~> 1.0.5"])
-    s.add_dependency(%q<rake>, ["~> 10.4.2"])
     s.add_dependency(%q<rack>, ["~> 1.6.5"])
     s.add_dependency(%q<nokogiri>, ["~> 1.6.8.1"])
+    s.add_dependency(%q<tins>, ["~> 1.5.0"])
     s.add_dependency(%q<term-ansicolor>, ["~> 1.3.2"])
   end
 end

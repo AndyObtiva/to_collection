@@ -51,7 +51,4 @@ describe 'to_collection' do
       end
     end
   end
-  describe 'each_as_collection' do
-
-  end
 end
