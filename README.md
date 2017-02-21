@@ -1,4 +1,8 @@
 # `to_collection` v1.0.0
+[![Gem Version](https://badge.fury.io/rb/to_collection.svg)](http://badge.fury.io/rb/to_collection)
+[![Build Status](https://api.travis-ci.org/AndyObtiva/to_collection.svg?branch=master)](https://travis-ci.org/AndyObtiva/to_collection)
+[![Coverage Status](https://coveralls.io/repos/AndyObtiva/to_collection/badge.svg?branch=master)](https://coveralls.io/r/AndyObtiva/to_collection?branch=master)
+[![Code Climate](https://codeclimate.com/github/AndyObtiva/to_collection.svg)](https://codeclimate.com/github/AndyObtiva/to_collection)
 
 Treat an array of objects and a singular object uniformly as a collection of objects.
 Especially useful in processing REST Web Service API JSON responses in a functional approach.
@@ -240,5 +244,5 @@ You asked for "Elegant" didn't you? I hope this was what you were looking for.
 
 ## Copyright
 
-Copyright (c) 2017 AndyObtiva. See LICENSE.txt for
+Copyright (c) 2017 Andy Maleh. See LICENSE.txt for
 further details.

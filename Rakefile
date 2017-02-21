@@ -18,39 +18,38 @@ Jeweler::Tasks.new do |gem|
   gem.homepage = "http://github.com/AndyObtiva/to_collection"
   gem.license = "MIT"
   gem.summary = %Q{Treat an array of objects and a singular object uniformly as a collection of objects}
-  gem.description = %Q{Treat an array of objects and a singular object uniformly as a collection of objects. Especially useful in processing REST Web Service API JSON responses in a functional approach.
+  gem.description = %Q{
+    Treat an array of objects and a singular object uniformly as a collection of objects. Especially useful in processing REST Web Service API JSON responses in a functional approach.
 
-  Canonicalize data to treat uniformly whether it comes in as a single object or an array of objects, dropping `nils` out automatically:
+    Canonicalize data to treat uniformly whether it comes in as a single object or an array of objects, dropping `nils` out automatically.
 
-  ```ruby
-  canonical_json_response = people_http_request.to_collection
-  canonical_json_response.each do |person|
-    city_counts[person["city"]] ||= 0
-    city_counts[person["city"]] += 1
-  end
-  ```
+    API: `object.to_collection(compact)` where `compact` is a boolean for whether to compact collection or not. It is true by default.
 
-  Shorter syntax:
+    Example:
 
-  ```ruby
-  people_http_request.each_in_collection do |person|
-    city_counts[person["city"]] ||= 0
-    city_counts[person["city"]] += 1
-  end
-  ```
+    ```ruby
+    city_counts = {}
+    people_http_request.to_collection.each do |person|
+      city_counts[person["city"]] ||= 0
+      city_counts[person["city"]] += 1
+    end
+    ```
 
-  Wanna keep nils? No problem:
+    Wanna keep `nil` values? No problem! Just pass `false` as an argument:
 
-  ```ruby
-  canonical_json_response = people_http_request.to_collection(false)
-
-  people_http_request.each_in_collection(false) do |person|
-    city_counts[person["city"]] ||= 0
-    city_counts[person["city"]] += 1
-  end
-  ```
-
-}
+    ```ruby
+    bad_people_count = 0
+    city_counts = {}
+    people_http_request.to_collection(false).each do |person|
+      if person.nil?
+        bad_people_count += 1
+      else
+        city_counts[person["city"]] ||= 0
+        city_counts[person["city"]] += 1
+      end
+    end
+    ```
+  }
   gem.email = "andy.am@gmail.com"
   gem.authors = ["AndyObtiva"]
   # dependencies defined in Gemfile
