@@ -37,6 +37,20 @@ people_http_request.to_collection(false).each do |person|
 end
 ```
 
+## Instructions
+
+### Bundler / Rails
+
+`gem 'to_collection', '~> 1.0.0'`
+
+### Plain Ruby
+
+`require 'to_collection'`
+
+### Note
+
+Code above enables `#to_collection` method on all classes inheriting from `Object`. See [options](#options) below in case you prefer to **manually** include in certain classes only.
+
 ## Background
 
 I'm sure you've encountered REST Web Service APIs that operate as follows:
@@ -276,7 +290,7 @@ Example:
 Bundler would have gem require option as false:
 
 ```ruby
-require 'to_collection', require: false
+gem 'to_collection', require: false
 ```
 
 Ruby code would then set that environment variable **manually** before requiring library:
