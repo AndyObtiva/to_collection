@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+gem 'super_module', '1.2.0'
+
 group :development do
   gem 'jeweler'#, '~> 2.0.1'
   gem "rdoc"#, "~> 5.0.0"

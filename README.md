@@ -1,8 +1,7 @@
 # `to_collection` v1.0.0
 [![Gem Version](https://badge.fury.io/rb/to_collection.svg)](http://badge.fury.io/rb/to_collection)
-[![Build Status](https://api.travis-ci.org/AndyObtiva/to_collection.svg?branch=master)](https://travis-ci.org/AndyObtiva/to_collection)
+[![Build Status](https://travis-ci.org/AndyObtiva/to_collection.svg?branch=master)](https://travis-ci.org/AndyObtiva/to_collection)
 [![Coverage Status](https://coveralls.io/repos/github/AndyObtiva/to_collection/badge.svg?branch=master)](https://coveralls.io/github/AndyObtiva/to_collection?branch=master)
-[![Code Climate](https://codeclimate.com/github/AndyObtiva/to_collection.svg)](https://codeclimate.com/github/AndyObtiva/to_collection)
 
 Treat an array of objects and a singular object uniformly as a collection of objects.
 Especially useful in processing REST Web Service API JSON responses in a functional approach.
@@ -228,7 +227,45 @@ people_http_request.to_collection(false).each do |person|
 end
 ```
 
-You asked for "Elegant" didn't you? I hope this was what you were looking for.
+You asked for "Elegant" didn't you? I hope that was what you were looking for.
+
+## Options
+
+### `Object.to_collection_already_implemented_strategy`
+Possible Values: `"raise_error"`, `"keep"`, `"overwrite"`
+
+Setting this option allows developer to configure handling of the case when
+`Object#to_collection` already exists before loading `to_collection` library.
+
+#### `"raise_error"` (default)
+
+For safety reasons, the library will raise AlreadyImplementedError by default to
+alert the developer and provide information about the other options.
+This prevents later surprises and puts control in the hand of the developer to
+responsibly decide what option to pick next.
+
+#### `"keep"`
+
+This keeps existing `to_collection` untouched, disabling this library.
+
+#### `"overwrite"`
+
+This overwrites existing `to_collection` method, fully enabling this library.
+
+### `ENV['TO_COLLECTION_ALREADY_IMPLEMENTED_STRATEGY']`
+Possible Values: `"raise_error"`, `"keep"`, `"overwrite"`
+
+Same function as `Object.to_collection_already_implemented_strategy`.
+Environment variable takes precedence over class accessor variable though.
+
+### `ENV['TO_COLLECTION_OBJECT_INCLUDE']`
+Possible Values: `"true"`, `"false"`
+
+
+
+ENV['TO_COLLECTION_ALREADY_IMPLEMENTED_STRATEGY']
+
+
 
 ## Contributing
 

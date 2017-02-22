@@ -40,6 +40,7 @@ GEM
       semver2
     json (2.0.3)
     jwt (1.5.6)
+    method_source (0.8.2)
     mini_portile2 (2.1.0)
     multi_json (1.12.1)
     multi_xml (0.6.0)
@@ -76,6 +77,8 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
+    super_module (1.2.0)
+      method_source (~> 0.8.2)
     term-ansicolor (1.4.0)
       tins (~> 1.0)
     thor (0.19.4)
@@ -91,6 +94,7 @@ DEPENDENCIES
   rdoc
   rspec
   simplecov
+  super_module (= 1.2.0)
 
 BUNDLED WITH
    1.14.4
