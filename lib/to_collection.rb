@@ -41,4 +41,4 @@ super_module :ToCollection do
 
 end
 
-require_relative 'ext/object'
+require File.expand_path(File.join(__FILE__, '..', 'ext', 'object'))

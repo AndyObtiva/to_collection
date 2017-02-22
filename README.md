@@ -229,10 +229,16 @@ end
 
 You asked for "Elegant" didn't you? I hope that was what you were looking for.
 
+## How It Works
+
+A [super_module](https://github.com/AndyObtiva/super_module) called `ToCollection`
+contains the `#to_collection` method and is included (mixed) into `Object`, providing
+`#to_collection` method to inheriting classes.
+
 ## Options
 
 ### `Object.to_collection_already_implemented_strategy`
-Possible Values: `"raise_error"`, `"keep"`, `"overwrite"`
+Possible Values: `"raise_error"` (default), `"keep"`, `"overwrite"`
 
 Setting this option allows developer to configure handling of the case when
 `Object#to_collection` already exists before loading `to_collection` library.
@@ -253,19 +259,42 @@ This keeps existing `to_collection` untouched, disabling this library.
 This overwrites existing `to_collection` method, fully enabling this library.
 
 ### `ENV['TO_COLLECTION_ALREADY_IMPLEMENTED_STRATEGY']`
-Possible Values: `"raise_error"`, `"keep"`, `"overwrite"`
+Possible Values: `"raise_error"` (default), `"keep"`, `"overwrite"`
 
 Same function as `Object.to_collection_already_implemented_strategy`.
 Environment variable takes precedence over class accessor variable though.
 
 ### `ENV['TO_COLLECTION_OBJECT_INCLUDE']`
-Possible Values: `"true"`, `"false"`
+Possible Values: `"true"` (default), `"false"`
 
+Must be set before requiring/loading library. When using bundler, ensure `require` option is set to `false` or `nil`.
 
+`ToCollection` [super_module](https://github.com/AndyObtiva/super_module) is automatically included in `Object` except when `ENV['TO_COLLECTION_OBJECT_INCLUDE']` is set to `"false"`, providing developer with the option to **manually** include (mix in) `ToCollection` [super_module](https://github.com/AndyObtiva/super_module) into classes that need it.
 
-ENV['TO_COLLECTION_ALREADY_IMPLEMENTED_STRATEGY']
+Example:
 
+Bundler would have gem require option as false:
 
+```ruby
+require 'to_collection', require: false
+```
+
+Ruby code would then set that environment variable **manually** before requiring library:
+
+```ruby
+ENV['TO_COLLECTION_OBJECT_INCLUDE'] = false
+require 'to_collection'
+Hash.instance_eval do
+  include ToCollection #enables to_collection method
+end
+Array.instance_eval do
+  include ToCollection #enables to_collection method
+end
+response_data = people_http_request #returns single hash or array of hashes
+response_data.to_collection.each do |person_hash|
+  # do some work
+end
+```
 
 ## Contributing
 
@@ -273,7 +302,7 @@ ENV['TO_COLLECTION_ALREADY_IMPLEMENTED_STRATEGY']
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
 * Start a feature/bugfix branch.
-* `gem install bundler -v 1.10.0` #v1.10.0 required by `jeweler` v2.0.1
+* `gem install bundler`
 * `bundle`
 * Commit and push until you are happy with your contribution.
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally. Also, do not upgrade `jeweler`. It is intentionally at an old version that is compatible with running tests in Travis with older verison of Ruby as well as supporting Coveralls, Simplecov, and Code Climate.
