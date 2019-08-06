@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'super_module', '1.2.0'
+gem 'super_module', '1.2.2'
 
 group :development do
   gem 'jeweler', '~> 2.3.3'

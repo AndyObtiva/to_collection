@@ -1,6 +1,6 @@
 require 'super_module'
 
-super_module :ToCollection do
+ToCollection = super_module do
   class AlreadyImplementedError < StandardError
   end
 

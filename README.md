@@ -1,4 +1,4 @@
-# `to_collection` v1.0.0
+# `to_collection`
 [![Gem Version](https://badge.fury.io/rb/to_collection.svg)](http://badge.fury.io/rb/to_collection)
 [![Build Status](https://travis-ci.org/AndyObtiva/to_collection.svg?branch=master)](https://travis-ci.org/AndyObtiva/to_collection)
 [![Coverage Status](https://coveralls.io/repos/github/AndyObtiva/to_collection/badge.svg?branch=master)](https://coveralls.io/github/AndyObtiva/to_collection?branch=master)
@@ -41,7 +41,7 @@ end
 
 ### Bundler / Rails
 
-`gem 'to_collection', '~> 1.0.0'`
+`gem 'to_collection', '~> 1.0.1'`
 
 ### Plain Ruby
 
@@ -309,6 +309,12 @@ response_data.to_collection.each do |person_hash|
   # do some work
 end
 ```
+
+## Release Notes
+
+### v1.0.1
+
+- Updated `super_module` gem version to relax indirect `method_source` gem version dependency
 
 ## Contributing
 
