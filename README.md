@@ -1,16 +1,19 @@
-# `to_collection`
+# ToCollection 2.0.0 Ruby Refinement
 [![Gem Version](https://badge.fury.io/rb/to_collection.svg)](http://badge.fury.io/rb/to_collection)
 [![Build Status](https://travis-ci.org/AndyObtiva/to_collection.svg?branch=master)](https://travis-ci.org/AndyObtiva/to_collection)
 [![Coverage Status](https://coveralls.io/repos/github/AndyObtiva/to_collection/badge.svg?branch=master)](https://coveralls.io/github/AndyObtiva/to_collection?branch=master)
 
 Treat an array of objects and a singular object uniformly as a collection of objects.
-Especially useful in processing REST Web Service API JSON responses in a functional approach.
+
+Especially useful in processing REST Web Service API JSON responses in a uniform functional approach.
+
+`ToCollection` is a Ruby Refinement, so it may be safely enabled via `using ToCollection` where needed only.
 
 ## Introduction
 
 Canonicalize data to treat uniformly whether it comes in as a single object or an array of objects, dropping `nils` out automatically.
 
-API: `object.to_collection(compact)` where `compact` is a boolean for whether to compact collection or not. It is true by default.
+API: `object#to_collection(compact=true)` where `compact` is a boolean for whether to compact collection or not. It is true by default.
 
 Example:
 
@@ -39,17 +42,24 @@ end
 
 ## Instructions
 
-### Bundler / Rails
+### Bundler
 
-`gem 'to_collection', '~> 1.0.1'`
+- Add `gem 'to_collection', '~> 2.0.0'` to Gemfile
+- Run `bundle`
+- Require `to_collection` ruby gem in code (e.g. via `Bundler.require(:default)` or `require 'bundler/setup'` & `require 'to_collection'`)
+- Add `using ToCollection` to the top of the Ruby file you would like to refine `Object` in with `#to_collection` method.
 
-### Plain Ruby
+### Manual Gem Install
 
-`require 'to_collection'`
+- Run `gem install to_collection -v2.0.0`
+- Add `require 'to_collection'` to code
+- Add `using ToCollection` to the top of the Ruby file you would like to refine `Object` in with `#to_collection` method.
 
 ### Note
 
-Code above enables `#to_collection` method on all classes inheriting from `Object`. See [options](#options) below in case you prefer to **manually** include in certain classes only.
+If '#to_collection' was already defined on `Object` in a project, requiring the `to_collection` library will print a warning. 
+
+It is still safe to require as it does not overwrite `Object#to_collection` except in Ruby files where `using ToCollection` is added.
 
 ## Background
 
@@ -63,7 +73,7 @@ GET /people
 <= 1 person
 JSON Response:
 ```JSON
-{"first_name":"karim","last_name":"akram","city":"Dubai"}
+{"first_name":"John","last_name":"Barber","city":"Chicago"}
 ```
 
 HTTP Request: =>
@@ -75,7 +85,7 @@ GET /people
 JSON Response:
 
 ```JSON
-[{"first_name":"karim","last_name":"akram","city":"Dubai"}, {"first_name":"muhsen","last_name":"asaad","city":"Amman"}, {"first_name":"assaf","last_name":"munir","city":"Qatar"}]
+[{"first_name":"John","last_name":"Barber","city":"Chicago"}, {"first_name":"Mark","last_name":"Jones","city":"New York"}, {"first_name":"Josh","last_name":"Beeswax","city":"Denver"}]
 ```
 
 How do you work with the varied JSON responses in Ruby?
@@ -198,7 +208,7 @@ Example:
 How about go one step further and bake this into all objects using our previous approach of object-oriented polymorphism and Ruby open-classes? That way, we don't just collapse the difference between dealing with arrays of hashes vs hashes but also arrays of objects vs singular objects by adding. Note the use of flatten(1) below to prevent arrays or arrays from collapsing more than one level.
 
 ```ruby
-Object.class_eval do
+class Object
   def to_collection
     [self].flatten(1).compact
   end
@@ -218,7 +228,7 @@ end
 A refactored version including optional compacting would be:
 
 ```ruby
-Object.class_eval do
+class Object
   def to_collection(compact=true)
     collection = [self].flatten(1)
     compact ? collection.compact : collection
@@ -241,76 +251,26 @@ people_http_request.to_collection(false).each do |person|
 end
 ```
 
+Of course, in Ruby 2+, you may use Ruby Refinements, so simply include `Object#to_collection` via this line instead:
+
+```ruby
+using ToCollection
+```
+
 You asked for "Elegant" didn't you? I hope that was what you were looking for.
 
 ## How It Works
 
-A [super_module](https://github.com/AndyObtiva/super_module) called `ToCollection`
-contains the `#to_collection` method and is included (mixed) into `Object`, providing
-`#to_collection` method to inheriting classes.
-
-## Options
-
-### `Object.to_collection_already_implemented_strategy`
-Possible Values: `"raise_error"` (default), `"keep"`, `"overwrite"`
-
-Setting this option allows developer to configure handling of the case when
-`Object#to_collection` already exists before loading `to_collection` library.
-
-#### `"raise_error"` (default)
-
-For safety reasons, the library will raise AlreadyImplementedError by default to
-alert the developer and provide information about the other options.
-This prevents later surprises and puts control in the hand of the developer to
-responsibly decide what option to pick next.
-
-#### `"keep"`
-
-This keeps existing `to_collection` untouched, disabling this library.
-
-#### `"overwrite"`
-
-This overwrites existing `to_collection` method, fully enabling this library.
-
-### `ENV['TO_COLLECTION_ALREADY_IMPLEMENTED_STRATEGY']`
-Possible Values: `"raise_error"` (default), `"keep"`, `"overwrite"`
-
-Same function as `Object.to_collection_already_implemented_strategy`.
-Environment variable takes precedence over class accessor variable though.
-
-### `ENV['TO_COLLECTION_OBJECT_INCLUDE']`
-Possible Values: `"true"` (default), `"false"`
-
-Must be set before requiring/loading library. When using bundler, ensure `require` option is set to `false` or `nil`.
-
-`ToCollection` [super_module](https://github.com/AndyObtiva/super_module) is automatically included in `Object` except when `ENV['TO_COLLECTION_OBJECT_INCLUDE']` is set to `"false"`, providing developer with the option to **manually** include (mix in) `ToCollection` [super_module](https://github.com/AndyObtiva/super_module) into classes that need it.
-
-Example:
-
-Bundler would have gem require option as false:
-
-```ruby
-gem 'to_collection', require: false
-```
-
-Ruby code would then set that environment variable **manually** before requiring library:
-
-```ruby
-ENV['TO_COLLECTION_OBJECT_INCLUDE'] = false
-require 'to_collection'
-Hash.instance_eval do
-  include ToCollection #enables to_collection method
-end
-Array.instance_eval do
-  include ToCollection #enables to_collection method
-end
-response_data = people_http_request #returns single hash or array of hashes
-response_data.to_collection.each do |person_hash|
-  # do some work
-end
-```
+A Ruby Refinement is activated via `using ToCollection` adding/overwriting the `#to_collection` method in `Object`, which 
+is the ancestor of all Ruby objects.
 
 ## Release Notes
+
+### v2.0.0
+
+- Revamped API using Ruby Refinements (safer than monkey-patching)
+- Removed `super_module` gem dependency
+- Dropped safety options since Ruby Refinements already handle things safely
 
 ### v1.0.1
 
@@ -330,5 +290,5 @@ end
 
 ## Copyright
 
-Copyright (c) 2017 Andy Maleh. See LICENSE.txt for
+Copyright (c) 2017-2020 Andy Maleh. See LICENSE.txt for
 further details.

@@ -19,4 +19,11 @@ if RUBY_VERSION >= '2.3' && !defined?(Rubinius)
     puts e.backtrace.join("\n")
   end
 end
-require File.expand_path(File.join(__FILE__, '..', '..', 'lib', 'to_collection'))
+
+class Object
+  def to_collection
+    'already implemented'
+  end
+end
+
+require 'to_collection'

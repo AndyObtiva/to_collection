@@ -17,39 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "to_collection"
   gem.homepage = "http://github.com/AndyObtiva/to_collection"
   gem.license = "MIT"
-  gem.summary = %Q{Treat an array of objects and a singular object uniformly as a collection of objects}
-  gem.description = %Q{
-    Treat an array of objects and a singular object uniformly as a collection of objects. Especially useful in processing REST Web Service API JSON responses in a functional approach.
-
-    Canonicalize data to treat uniformly whether it comes in as a single object or an array of objects, dropping `nils` out automatically.
-
-    API: `object.to_collection(compact)` where `compact` is a boolean for whether to compact collection or not. It is true by default.
-
-    Example:
-
-    ```ruby
-    city_counts = {}
-    people_http_request.to_collection.each do |person|
-      city_counts[person["city"]] ||= 0
-      city_counts[person["city"]] += 1
-    end
-    ```
-
-    Wanna keep `nil` values? No problem! Just pass `false` as an argument:
-
-    ```ruby
-    bad_people_count = 0
-    city_counts = {}
-    people_http_request.to_collection(false).each do |person|
-      if person.nil?
-        bad_people_count += 1
-      else
-        city_counts[person["city"]] ||= 0
-        city_counts[person["city"]] += 1
-      end
-    end
-    ```
-  }
+  gem.summary = %Q{ToCollection Ruby Refinement - Treat an array of objects and a singular object uniformly as a collection of objects}
+  gem.description = %Q{ToCollection Ruby Refinement - Treat an array of objects and a singular object uniformly as a collection of objects}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["Andy Maleh"]
   gem.files = Dir['lib/**/*.rb']
