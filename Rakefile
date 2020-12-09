@@ -21,7 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{ToCollection Ruby Refinement - Treat an array of objects and a singular object uniformly as a collection of objects}
   gem.email = "andy.am@gmail.com"
   gem.authors = ["Andy Maleh"]
-  gem.files = Dir['lib/**/*.rb']
+  gem.files = Dir['VERSION', 'README.md', 'CHANGELOG.md', 'to_collection.gemspec', 'lib/**/*.rb']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

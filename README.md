@@ -1,4 +1,4 @@
-# ToCollection 2.0.0 Ruby Refinement
+# ToCollection 2.0.1 Ruby Refinement
 [![Gem Version](https://badge.fury.io/rb/to_collection.svg)](http://badge.fury.io/rb/to_collection)
 [![Build Status](https://travis-ci.org/AndyObtiva/to_collection.svg?branch=master)](https://travis-ci.org/AndyObtiva/to_collection)
 [![Coverage Status](https://coveralls.io/repos/github/AndyObtiva/to_collection/badge.svg?branch=master)](https://coveralls.io/github/AndyObtiva/to_collection?branch=master)
@@ -8,6 +8,8 @@ Treat an array of objects and a singular object uniformly as a collection of obj
 Especially useful in processing REST Web Service API JSON responses in a uniform functional approach.
 
 `ToCollection` is a Ruby Refinement, so it may be safely enabled via `using ToCollection` where needed only.
+
+Now also supports [Opal Ruby](https://opalrb.com) by degrading gracefully to monkey-patching.
 
 ## Introduction
 
@@ -44,20 +46,26 @@ end
 
 ### Bundler
 
-- Add `gem 'to_collection', '~> 2.0.0'` to Gemfile
+- Add `gem 'to_collection', '~> 2.0.1'` to Gemfile
 - Run `bundle`
 - Require `to_collection` ruby gem in code (e.g. via `Bundler.require(:default)` or `require 'bundler/setup'` & `require 'to_collection'`)
 - Add `using ToCollection` to the top of the Ruby file you would like to refine `Object` in with `#to_collection` method.
 
 ### Manual Gem Install
 
-- Run `gem install to_collection -v2.0.0`
+- Run `gem install to_collection -v2.0.1`
 - Add `require 'to_collection'` to code
 - Add `using ToCollection` to the top of the Ruby file you would like to refine `Object` in with `#to_collection` method.
 
+### Opal Ruby
+
+- Follow the first step in [Bundler](#bundler) or [Manual Gem Install](#manual-gem-install) instructions to add the gem.
+- Add Opal.use_gem 'to_collection' to "config/initializers/assets.rb" in Rails unless using as part of another gem.
+- Add `require 'to_collection'` to code (this adds the functionality via monkey-patching not refinements in [Opal](https://opalrb.com))
+
 ### Note
 
-If '#to_collection' was already defined on `Object` in a project, requiring the `to_collection` library will print a warning. 
+If '#to_collection' was already defined on `Object` in a project, requiring the `to_collection` library will print a warning.
 
 It is still safe to require as it does not overwrite `Object#to_collection` except in Ruby files where `using ToCollection` is added.
 
@@ -261,20 +269,12 @@ You asked for "Elegant" didn't you? I hope that was what you were looking for.
 
 ## How It Works
 
-A Ruby Refinement is activated via `using ToCollection` adding/overwriting the `#to_collection` method in `Object`, which 
+A Ruby Refinement is activated via `using ToCollection` adding/overwriting the `#to_collection` method in `Object`, which
 is the ancestor of all Ruby objects.
 
-## Release Notes
+## Change Log
 
-### v2.0.0
-
-- Revamped API using Ruby Refinements (safer than monkey-patching)
-- Removed `super_module` gem dependency
-- Dropped safety options since Ruby Refinements already handle things safely
-
-### v1.0.1
-
-- Updated `super_module` gem version to relax indirect `method_source` gem version dependency
+[CHANGELOG.md](CHANGELOG.md)
 
 ## Contributing
 
@@ -290,5 +290,6 @@ is the ancestor of all Ruby objects.
 
 ## Copyright
 
-Copyright (c) 2017-2020 Andy Maleh. See LICENSE.txt for
-further details.
+[MIT](LICENSE.txt)
+
+Copyright (c) 2017-2020 Andy Maleh.
